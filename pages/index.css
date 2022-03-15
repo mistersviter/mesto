@@ -19,5 +19,6 @@
 @import url(../blocks/places/__card-image/places__card-image.css);
 @import url(../blocks/places/__card-info/places__card-info.css);
 @import url(../blocks/places/__card-title/places__card-title.css);
+@import url(../blocks/page/__places/page__places.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
