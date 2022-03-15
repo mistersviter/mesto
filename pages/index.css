@@ -12,6 +12,7 @@
 @import url(../blocks/profile/__description/profile__description.css);
 @import url(../blocks/profile/__add-card-button/profile__add-card-button.css);
 @import url(../blocks/profile/__button/profile__button.css);
+@import url(../blocks/page/__profile/page__profile.css);
 @import url(../blocks/places/places.css);
 @import url(../blocks/places/__cards/places__cards.css);
 @import url(../blocks/places/__card/places__card.css);
