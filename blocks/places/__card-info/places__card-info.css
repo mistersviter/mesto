@@ -1,0 +1,7 @@
+.places__card-info {
+  display: flex;
+  margin: 25px auto 0;
+  justify-content: space-between;
+  width: 246px;
+  min-height: 23px;
+}
