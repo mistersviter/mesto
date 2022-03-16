@@ -6,4 +6,5 @@
   height: 19px;
   padding: 0;
   cursor: pointer;
+  transition: opacity .2s linear;
 }

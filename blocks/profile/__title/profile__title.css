@@ -8,3 +8,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;  
 }
+
+@media screen and (max-width: 709px) {
+  .profile__title {
+    justify-content: center;
+    font-size: 27px;
+    line-height: 1.21;
+  }
+}
