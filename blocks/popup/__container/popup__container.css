@@ -3,9 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: calc(50vh - 330px/2) auto;
   width: 430px;
-  height: 330px;
+  min-height: 330px;
   color: #000;
   background-color: #fff;
   border-radius: 10px;
@@ -15,6 +14,6 @@
   .popup__container {
     margin: calc(50vh - 322px/2) auto;
     width: 282px;
-    height: 322px;
+    min-height: 322px;
   }
 }

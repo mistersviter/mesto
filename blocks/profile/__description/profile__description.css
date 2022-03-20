@@ -1,6 +1,6 @@
 .profile__description {
   margin: 0;
-  padding: 16px 0 0;
+  padding-top: 10px;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.21;
@@ -14,7 +14,7 @@
   .profile__description{
     align-self: unset;
     font-size: 14px;
-    padding: 14px 0 0;
+    padding-top: 6px;
     text-align: center;
   }
 }

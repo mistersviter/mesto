@@ -6,15 +6,11 @@ let profileJob = profileSection.querySelector('.profile__description');
 
 // Форма
 let popup = document.querySelector('.popup');
-let formElement = popup.querySelector('.popup__container');
-let popupCloseBtn = formElement.querySelector('.popup__close-button');
+let popupContainer = popup.querySelector('.popup__container');
+let popupCloseBtn = popupContainer.querySelector('.popup__close-button');
+let formElement = popupContainer.querySelector('.popup__form');
 let nameInput = formElement.querySelector('.popup__input_type_name');
 let jobInput = formElement.querySelector('.popup__input_type_description');
-
-// Вызовы
-profileEditBtn.addEventListener('click', popupOpen);
-popupCloseBtn.addEventListener('click', popupClose);
-formElement.addEventListener('submit', formSubmitHandler); 
 
 // Функции
 function popupOpen() {
@@ -28,7 +24,6 @@ function setFormFieldsValues() {
 }
 
 function popupClose(evt) {
-  evt.preventDefault();
   popup.classList.remove('popup_opened');
 }
 
@@ -38,3 +33,8 @@ function formSubmitHandler(evt) {
   profileJob.textContent = jobInput.value;
   popupClose(evt);
 }
+
+// Вызовы
+profileEditBtn.addEventListener('click', popupOpen);
+popupCloseBtn.addEventListener('click', popupClose);
+formElement.addEventListener('submit', formSubmitHandler); 

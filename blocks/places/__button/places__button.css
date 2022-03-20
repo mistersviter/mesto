@@ -1,8 +1,0 @@
-.places__button:hover {
-  opacity: .5;
-}
-
-.places__button:active {
-  opacity: 1;
-  background-image: url('../../../images/card_like_button_active.svg');  
-}
