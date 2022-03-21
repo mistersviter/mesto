@@ -23,7 +23,7 @@ function setFormFieldsValues() {
   jobInput.value = profileJob.textContent;
 }
 
-function popupClose(evt) {
+function popupClose() {
   popup.classList.remove('popup_opened');
 }
 
@@ -31,7 +31,7 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  popupClose(evt);
+  popupClose();
 }
 
 // Вызовы
