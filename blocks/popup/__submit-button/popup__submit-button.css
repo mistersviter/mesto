@@ -1,4 +1,4 @@
-.popup__save-button {
+.popup__submit-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,12 +16,12 @@
   margin-top: 14px;
 }
 
-.popup__save-button:hover {
+.popup__submit-button:hover {
   background-color: rgba(0, 0, 0, .8);
 }
 
 @media screen and (max-width: 709px) {
-  .popup__save-button {
+  .popup__submit-button {
     width: 238px;
     font-size: 14px;
     margin-top: 4px;
