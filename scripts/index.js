@@ -129,8 +129,10 @@ function changeZoomContent(cardName, cardLink) {
 cardsContainer.append(...elements);
 
 // Вызовы
-setProfileFormFieldsValues();
-profileEditBtn.addEventListener('click', () => openPopup(editProfilePopup));
+profileEditBtn.addEventListener('click', () => {
+  setProfileFormFieldsValues();
+  openPopup(editProfilePopup);
+});
 
 editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
