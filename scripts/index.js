@@ -62,18 +62,36 @@ const initialCards = [
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsContainer = document.querySelector('.places__cards');
 
+// Escape
+const ESC_KEY = 'Escape';
+
 // Функции
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
+
+// Закрытие попапа по нажатию Esc
+const handleEscDown = (evt) => {
+  console.log(evt.key);
+  const currentPopup = document.querySelector('.popup_opened');
+  if (evt.key === ESC_KEY) {
+    closePopup(currentPopup);
+  }
 }
 
+// Открыть попап
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleEscDown);
+}
+
+// Установить значения полей в карточке профиля
 function setProfileFormFieldsValues() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 }
 
+// Закрыть попап
 function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+    popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', handleEscDown);
 }
 
 function handleProfileFormSubmit(evt) {
@@ -90,6 +108,7 @@ function handleAddCardFormSubmit(evt) {
   closePopup(addCardPopup);
 }
 
+// Создание карточки
 const createCard = (cardName, cardLink) => {  
   const card = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -116,16 +135,19 @@ const elements = initialCards.map(card => {
   return createCard(card.name, card.link);
 });
 
+// Добавление карточки на экран
 function addNewCard(cardName, cardLink) {
   cardsContainer.prepend(createCard(cardName, cardLink));
 }
 
+// Загрузка контента в окно зума
 function changeZoomContent(cardName, cardLink) {
   zoomImage.src = cardLink;
   zoomImage.alt = cardName;
   zoomCaption.textContent = cardName;
 }
 
+// Добавление на экран дефолтного массива карточек
 cardsContainer.append(...elements);
 
 // Вызовы
@@ -140,9 +162,13 @@ addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
 addCardBtn.addEventListener('click', () => openPopup(addCardPopup));
 
+// Закрытие попапа по крестику и фону
 popups.forEach(popup => {
   popup.addEventListener('click', (evt) => {
-     if (evt.target.classList.contains('popup__close-button')) {
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup);
+      }
+      if (evt.target.classList.contains('popup')) {
         closePopup(popup);
       }
   });
