@@ -66,12 +66,11 @@ const cardsContainer = document.querySelector('.places__cards');
 const ESC_KEY = 'Escape';
 
 // Функции
-
 // Закрытие попапа по нажатию Esc
 const handleEscDown = (evt) => {
-  console.log(evt.key);
   const currentPopup = document.querySelector('.popup_opened');
   if (evt.key === ESC_KEY) {
+    resetCurrentForm(currentPopup);
     closePopup(currentPopup);
   }
 }
@@ -90,8 +89,8 @@ function setProfileFormFieldsValues() {
 
 // Закрыть попап
 function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', handleEscDown);
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEscDown);
 }
 
 function handleProfileFormSubmit(evt) {
@@ -150,7 +149,17 @@ function changeZoomContent(cardName, cardLink) {
 // Добавление на экран дефолтного массива карточек
 cardsContainer.append(...elements);
 
-// Вызовы
+// Сброс формы при закрытии
+const resetCurrentForm = (popup) => {
+  const formElement = popup.querySelector('.popup__form');
+  if (formElement) {
+    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+    inputList.forEach(inputElement => hideInputError(formElement, inputElement, dataObj));
+    formElement.reset();
+  }
+};
+
+// Events
 profileEditBtn.addEventListener('click', () => {
   setProfileFormFieldsValues();
   openPopup(editProfilePopup);
@@ -164,11 +173,9 @@ addCardBtn.addEventListener('click', () => openPopup(addCardPopup));
 
 // Закрытие попапа по крестику и фону
 popups.forEach(popup => {
-  popup.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('popup__close-button')) {
-        closePopup(popup);
-      }
-      if (evt.target.classList.contains('popup')) {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup__close-button') || evt.target.classList.contains('popup')) {   
+        resetCurrentForm(popup);             
         closePopup(popup);
       }
   });
