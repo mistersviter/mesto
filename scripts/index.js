@@ -41,10 +41,9 @@ const ESC_KEY = 'Escape';
 
 // Функции
 // Закрытие попапа по нажатию Esc
-const handleEscDown = (evt) => {
-  const currentPopup = document.querySelector('.popup_opened');
+const handleEscDown = (evt) => {  
   if (evt.key === ESC_KEY) {
-    resetCurrentForm(currentPopup);
+    const currentPopup = document.querySelector('.popup_opened');
     closePopup(currentPopup);
   }
 }
@@ -70,7 +69,7 @@ function closePopup(popup) {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  profileJob.textContent = jobInput.value;  
   closePopup(editProfilePopup);
 }
 
@@ -135,6 +134,7 @@ const resetCurrentForm = (popup) => {
 
 // Events
 profileEditBtn.addEventListener('click', () => {
+  resetCurrentForm(editProfilePopup);
   setProfileFormFieldsValues();
   openPopup(editProfilePopup);
 });
@@ -143,13 +143,15 @@ editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
-addCardBtn.addEventListener('click', () => openPopup(addCardPopup));
+addCardBtn.addEventListener('click', () => {
+  resetCurrentForm(addCardPopup);
+  openPopup(addCardPopup);
+});
 
 // Закрытие попапа по крестику и фону
 popups.forEach(popup => {
   popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup__close-button') || evt.target.classList.contains('popup')) {   
-        resetCurrentForm(popup);             
+      if (evt.target.classList.contains('popup__close-button') || evt.target.classList.contains('popup')) {
         closePopup(popup);
       }
   });
