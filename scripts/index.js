@@ -23,6 +23,7 @@ const addCardContainer = addCardPopup.querySelector('.popup__container');
 const addCardForm = addCardContainer.querySelector('.popup__form');
 const cardTitle = addCardForm.querySelector('.popup__input_type_card-title');
 const cardImg = addCardForm.querySelector('.popup__input_type_card-image');
+const addCardSubmitBtn = addCardForm.querySelector('.popup__submit-button');
 
 // Попапы
 // Попап зум картинки
@@ -74,8 +75,9 @@ function handleProfileFormSubmit(evt) {
 }
 
 function handleAddCardFormSubmit(evt) {
-  evt.preventDefault();   
+  evt.preventDefault();
   addNewCard(cardTitle.value, cardImg.value);
+  disableButton(addCardSubmitBtn, dataObj);
   addCardForm.reset();
   closePopup(addCardPopup);
 }
