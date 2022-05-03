@@ -1,3 +1,7 @@
+import { initialCards, cardTemplate, cardsContainer } from './constans.js';
+import { Card } from './Card.js';
+import { closePopup, handleEscDown } from './popupManagment.js';
+
 // Секция с профилем
 const profileSection = document.querySelector('.profile');
 const profileEditBtn = profileSection.querySelector('.profile__edit-profile-button');
@@ -25,35 +29,21 @@ const cardTitle = addCardForm.querySelector('.popup__input_type_card-title');
 const cardImg = addCardForm.querySelector('.popup__input_type_card-image');
 const addCardSubmitBtn = addCardForm.querySelector('.popup__submit-button');
 
-// Попапы
-// Попап зум картинки
-const zoomPopup = document.querySelector('.popup_type_zoom');
-const zoomContainer = zoomPopup.querySelector('.popup__zoom-container');
-const zoomFigure = zoomContainer.querySelector('.popup__zoom-figure');
-const zoomImage = zoomFigure.querySelector('.popup__zoom-image');
-const zoomCaption = zoomFigure.querySelector('.popup__zoom-caption');
-
-// Карточки
-const cardTemplate = document.querySelector('#card-template').content;
-const cardsContainer = document.querySelector('.places__cards');
-
-// Escape
-const ESC_KEY = 'Escape';
 
 // Функции
 // Закрытие попапа по нажатию Esc
-const handleEscDown = (evt) => {  
-  if (evt.key === ESC_KEY) {
-    const currentPopup = document.querySelector('.popup_opened');
-    closePopup(currentPopup);
-  }
-}
+// const handleEscDown = (evt) => {  
+//   if (evt.key === ESC_KEY) {
+//     const currentPopup = document.querySelector('.popup_opened');
+//     closePopup(currentPopup);
+//   }
+// }
 
-// Открыть попап
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', handleEscDown);
-}
+// // Открыть попап
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened');
+//   document.addEventListener('keydown', handleEscDown);
+// }
 
 // Установить значения полей в карточке профиля
 function setProfileFormFieldsValues() {
@@ -62,10 +52,10 @@ function setProfileFormFieldsValues() {
 }
 
 // Закрыть попап
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleEscDown);
-}
+// function closePopup(popup) {
+//   popup.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', handleEscDown);
+// }
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -81,48 +71,6 @@ function handleAddCardFormSubmit(evt) {
   addCardForm.reset();
   closePopup(addCardPopup);
 }
-
-// Создание карточки
-const createCard = (cardName, cardLink) => {  
-  const card = cardTemplate.querySelector('.card').cloneNode(true);
-
-  const cardImage = card.querySelector('.card__image');
-  const cardTitle = card.querySelector('.card__title');
-  const cardLikeBtn = card.querySelector('.card__like-button');
-  const cardDeleteBtn = card.querySelector('.card__delete-button');
-  
-  cardImage.src = cardLink;
-  cardImage.alt = cardName;
-  cardTitle.textContent = cardName;
-
-  cardLikeBtn.addEventListener('click', evt => evt.target.classList.toggle('card__like-button_active'));
-  cardDeleteBtn.addEventListener('click', () => card.remove());
-  cardImage.addEventListener('click', () => {
-    changeZoomContent(cardName, cardLink);
-    openPopup(zoomPopup);    
-  });
-
-  return card;
-}
-
-const elements = initialCards.map(card => {
-  return createCard(card.name, card.link);
-});
-
-// Добавление карточки на экран
-function addNewCard(cardName, cardLink) {
-  cardsContainer.prepend(createCard(cardName, cardLink));
-}
-
-// Загрузка контента в окно зума
-function changeZoomContent(cardName, cardLink) {
-  zoomImage.src = cardLink;
-  zoomImage.alt = cardName;
-  zoomCaption.textContent = cardName;
-}
-
-// Добавление на экран дефолтного массива карточек
-cardsContainer.append(...elements);
 
 // Сброс формы при закрытии
 const resetCurrentForm = (popup) => {
@@ -158,3 +106,14 @@ popups.forEach(popup => {
       }
   });
 });
+
+///////////////////////////////////////////////////////////
+
+const addNewCard = (item) => {
+  const newCard = new Card(item, cardTemplate);
+  newCard.generateCard(cardsContainer);
+}
+
+initialCards.reverse().forEach((card) => {
+  addNewCard(card);
+})
