@@ -25,13 +25,6 @@ export default class Card {
     openPopup(zoomPopup);
   }
 
-  // _handleClosePopup() {
-  //   zoomImage.src = '';
-  //   zoomImage.alt = '';
-  //   zoomCaption.textContent = '';
-  //   closePopup(zoomPopup);
-  // }
-
   _handleLikeCard() {
     this._likeBtn.classList.toggle('card__like-button_active');
   }
