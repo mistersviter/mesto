@@ -25,6 +25,15 @@ const initialCards = [
   }
 ];
 
+const formSelectors = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: '.popup__input-error'
+};
+
 // Секция с профилем
 const profileSection = document.querySelector('.profile');
 const profileEditBtn = profileSection.querySelector('.profile__edit-profile-button');
@@ -67,4 +76,4 @@ const cardsContainer = document.querySelector('.places__cards');
 // Escape
 const ESC_KEY = 'Escape';
 
-export { ESC_KEY, initialCards, cardTemplate, cardsContainer, zoomPopup, zoomImage, zoomCaption };
+export { ESC_KEY, initialCards, cardTemplate, cardsContainer, zoomPopup, zoomImage, zoomCaption, popups, formSelectors, profileEditBtn, addCardBtn, editProfileForm, addCardForm, addCardPopup, cardTitle, cardImg, editProfilePopup, nameInput, jobInput, profileName, profileJob };

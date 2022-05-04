@@ -1,4 +1,4 @@
-import { ESC_KEY} from './constans.js';
+import { ESC_KEY } from './constans.js';
 
 // Открыть попап
 export const openPopup = (popup) => {

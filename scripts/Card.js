@@ -1,7 +1,7 @@
 import { cardsContainer, zoomPopup, zoomImage, zoomCaption } from './constans.js';
-import { openPopup, closePopup } from './popupManagment.js';
+import { openPopup } from './popupManagment.js';
 
-export class Card {
+export default class Card {
   constructor(data, cardSelector) {
     this._cardSelector = cardSelector;
     this._title = data.name;
