@@ -38,19 +38,19 @@ export default class FormValidator {
     })
   };
   
-  _disableButton() {
+  disableButton() {
     this._submitButton.disabled = true;
     this._submitButton.classList.add(this._inactiveButtonClass);
   };
   
-  _enableButton() {
+  _enableButton() { // Публичный метод, мне кажется, не нужен. Так как метод вызывается при инпуте в любом случае
     this._submitButton.disabled = false;
     this._submitButton.classList.remove(this._inactiveButtonClass);
   };
   
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
-      this._disableButton();
+      this.disableButton();
     } else {
       this._enableButton();
     }
@@ -65,8 +65,11 @@ export default class FormValidator {
     });
   };
   
-  enableValidation() {
+  clearValidationErrors() {
     this._inputList.forEach((inputElement) => this._hideInputError(inputElement));
+  }
+
+  enableValidation() {    
     this._toggleButtonState();
     this._setEventListeners();
   }

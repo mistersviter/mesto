@@ -3,6 +3,15 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import { closePopup, openPopup } from './popupManagment.js';
 
+
+// Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
+const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
+editProfileFormValidator.enableValidation();
+
+// Создание объекта валидации добавления новой карточки и вызов метода enableValidation
+const addCardFormValidator = new FormValidator(formSelectors, addCardForm);
+addCardFormValidator.enableValidation();
+
 // Закрытие попапа по крестику и фону
 popups.forEach(popup => {
   popup.addEventListener('mousedown', (evt) => {
@@ -15,7 +24,8 @@ popups.forEach(popup => {
 // Создание новой карточки
 const addNewCard = (item) => {
   const newCard = new Card(item, cardTemplate);
-  newCard.generateCard(cardsContainer);
+  newCard.generateCard();
+  newCard.renderCard();
 };
 
 // Создание дефолтных карточек из массива
@@ -42,12 +52,9 @@ addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
 // Вешаем слушатель на клик по кнопке добавления новой карточки
 addCardBtn.addEventListener('click', () => {
+  addCardFormValidator.disableButton();
   addCardForm.reset();
-  openPopup(addCardPopup);
-
-  // Создание объекта валидации добавления новой карточки и вызов метода enableValidation
-  const addCardFormValidator = new FormValidator(formSelectors, addCardForm);
-  addCardFormValidator.enableValidation();
+  openPopup(addCardPopup);  
 });
 
 // Установить значения полей в карточке профиля
@@ -66,12 +73,9 @@ function handleProfileFormSubmit(evt) {
 
 // Вешаем слушатель на клик по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', () => {
+  editProfileFormValidator.clearValidationErrors();
   setProfileFormFieldsValues();
-  openPopup(editProfilePopup);
-
-  // Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
-  const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
-  editProfileFormValidator.enableValidation();
+  openPopup(editProfilePopup);  
 });
 
 // Вешаем слушатель на сабмит формы редактирования профиля

@@ -30,9 +30,7 @@ export default class Card {
   }
 
   _handleRemoveCard() {
-    this._element
-    .closest('.card')
-    .remove()
+    this._element.remove();
   }
 
   _setEventListeners() {
@@ -56,9 +54,12 @@ export default class Card {
 
     this._cardImage.src = this._image;
     this._cardTitle.textContent = this._title;
-    this._cardImage.alt = this._name;
-    cardsContainer.prepend(this._element);
+    this._cardImage.alt = this._title;    
 
     return this._element;
+  }
+
+  renderCard() {
+    cardsContainer.prepend(this._element);
   }
 }
