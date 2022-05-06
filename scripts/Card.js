@@ -1,4 +1,4 @@
-import { cardsContainer, zoomPopup, zoomImage, zoomCaption } from './constans.js';
+import { zoomPopup, zoomImage, zoomCaption } from './constans.js';
 import { openPopup } from './popupManagment.js';
 
 export default class Card {
@@ -57,9 +57,5 @@ export default class Card {
     this._cardImage.alt = this._title;    
 
     return this._element;
-  }
-
-  renderCard() {
-    cardsContainer.prepend(this._element);
   }
 }

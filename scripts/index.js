@@ -22,15 +22,20 @@ popups.forEach(popup => {
 });
 
 // Создание новой карточки
-const addNewCard = (item) => {
+const generateNewCard = (item) => {
   const newCard = new Card(item, cardTemplate);
-  newCard.generateCard();
-  newCard.renderCard();
+  return newCard.generateCard();
+};
+
+// Вставка карточки в контейнер
+const addNewCard = (item) => {
+  cardsContainer.prepend(item);
 };
 
 // Создание дефолтных карточек из массива
 initialCards.reverse().forEach((card) => {
-  addNewCard(card);
+  const newCard = generateNewCard(card);
+  addNewCard(newCard);
 });
 
 // Обработчик формы добавления карточки
@@ -42,7 +47,8 @@ function handleAddCardFormSubmit(evt) {
     link: cardImg.value
   }
 
-  addNewCard(card);
+  const newCard = generateNewCard(card);
+  addNewCard(newCard);
   addCardForm.reset();
   closePopup(addCardPopup);
 }
@@ -74,6 +80,7 @@ function handleProfileFormSubmit(evt) {
 // Вешаем слушатель на клик по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', () => {
   editProfileFormValidator.clearValidationErrors();
+  editProfileFormValidator.enableButton();
   setProfileFormFieldsValues();
   openPopup(editProfilePopup);  
 });
