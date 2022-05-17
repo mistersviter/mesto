@@ -37,8 +37,8 @@ const formSelectors = {
 // Секция с профилем
 const profileSection = document.querySelector('.profile');
 const profileEditBtn = profileSection.querySelector('.profile__edit-profile-button');
-const profileName = profileSection.querySelector('.profile__title');
-const profileJob = profileSection.querySelector('.profile__description');
+const profileNameElement = profileSection.querySelector('.profile__title');
+const profileInfoElement = profileSection.querySelector('.profile__description');
 const addCardBtn = profileSection.querySelector('.profile__add-card-button');
 
 // Попапы
@@ -49,8 +49,8 @@ const popups = document.querySelectorAll('.popup');
 const editProfilePopup = document.querySelector('.popup_type_edit-profile');
 const editProfileContainer = editProfilePopup.querySelector('.popup__container');
 const editProfileForm = editProfileContainer.querySelector('.popup__form');
-const nameInput = editProfileForm.querySelector('.popup__input_type_name');
-const jobInput = editProfileForm.querySelector('.popup__input_type_description');
+const userNameInput = editProfileForm.querySelector('.popup__input_type_name');
+const userInfoInput = editProfileForm.querySelector('.popup__input_type_description');
 
 // Попапы
 // Попап новой карточки
@@ -76,4 +76,4 @@ const cardsContainer = document.querySelector('.places__cards');
 // Escape
 const ESC_KEY = 'Escape';
 
-export { ESC_KEY, initialCards, cardTemplate, cardsContainer, zoomPopup, zoomImage, zoomCaption, popups, formSelectors, profileEditBtn, addCardBtn, editProfileForm, addCardForm, addCardPopup, cardTitle, cardImg, editProfilePopup, nameInput, jobInput, profileName, profileJob };
+export { ESC_KEY, initialCards, cardTemplate, cardsContainer, zoomPopup, zoomImage, zoomCaption, popups, formSelectors, profileEditBtn, addCardBtn, editProfileForm, addCardForm, addCardPopup, cardTitle, cardImg, editProfilePopup, userNameInput, userInfoInput, profileNameElement, profileInfoElement };

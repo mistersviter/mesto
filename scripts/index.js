@@ -1,8 +1,32 @@
-import { initialCards, cardTemplate, cardsContainer, popups, formSelectors, profileEditBtn, addCardBtn, editProfileForm, addCardForm, addCardPopup, cardTitle, cardImg, editProfilePopup, nameInput, jobInput, profileName, profileJob } from './constans.js';
+import {
+  initialCards,
+  cardTemplate,
+  cardsContainer,
+  popups,
+  formSelectors,
+  profileEditBtn,
+  addCardBtn,
+  editProfileForm,
+  addCardForm,
+  addCardPopup,
+  cardTitle,
+  cardImg,
+  editProfilePopup,
+  userNameInput,
+  userInfoInput,
+  profileNameElement,
+  profileInfoElement
+} from './constans.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import UserInfo from './UserInfo.js';
 import { closePopup, openPopup } from './popupManagment.js';
 
+// Создание экхемпляра класса UserInfo
+const userInfo = new UserInfo({
+  name: '.profile__title',
+  info: '.profile__description'
+})
 
 // Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
 const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
@@ -63,17 +87,12 @@ addCardBtn.addEventListener('click', () => {
   openPopup(addCardPopup);  
 });
 
-// Установить значения полей в карточке профиля
-function setProfileFormFieldsValues() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-}
-
 // Обработчик формы редактирования профиля
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;  
+  // profileName.textContent = nameInput.value;
+  // profileJob.textContent = jobInput.value;
+  userInfo.setUserInfo(userNameInput, userInfoInput);  
   closePopup(editProfilePopup);
 }
 
@@ -81,7 +100,9 @@ function handleProfileFormSubmit(evt) {
 profileEditBtn.addEventListener('click', () => {
   editProfileFormValidator.clearValidationErrors();
   editProfileFormValidator.enableButton();
-  setProfileFormFieldsValues();
+  const userData = userInfo.getUserInfo()
+  userNameInput.value = userData.name
+  userInfoInput.value = userData.info
   openPopup(editProfilePopup);  
 });
 
