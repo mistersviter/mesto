@@ -1,4 +1,4 @@
-import { zoomPopup, zoomImage, zoomCaption } from './constans.js';
+import { zoomPopup, zoomImage, zoomCaption } from '../utils/constans.js';
 import { openPopup } from './popupManagment.js';
 
 export default class Card {

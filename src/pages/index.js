@@ -16,13 +16,26 @@ import {
   userInfoInput,
   profileNameElement,
   profileInfoElement
-} from './constans.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import UserInfo from './UserInfo.js';
-import { closePopup, openPopup } from './popupManagment.js';
+} from '../utils/constans.js';
 
-// Создание экхемпляра класса UserInfo
+import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+//import PopupWithImage from '../components/PopupWithImage.js';
+//import PopupWithForm from '../components/PopupWithForm.js';
+
+import Popup from '../components/Popup.js'; // Для теста
+
+////////////////////////////////////////////////////
+// import Card from './Card.js';
+// import FormValidator from './FormValidator.js';
+// import UserInfo from './UserInfo.js';
+// import { closePopup, openPopup } from './popupManagment.js';
+
+const testPopup = new Popup('.popup_type_add-card'); // тест попапа
+
+// Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
   name: '.profile__title',
   info: '.profile__description'
@@ -36,14 +49,14 @@ editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(formSelectors, addCardForm);
 addCardFormValidator.enableValidation();
 
-// Закрытие попапа по крестику и фону
-popups.forEach(popup => {
-  popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup__close-button') || evt.target.classList.contains('popup')) {
-        closePopup(popup);
-      }
-  });
-});
+// // Закрытие попапа по крестику и фону
+// popups.forEach(popup => {
+//   popup.addEventListener('mousedown', (evt) => {
+//       if (evt.target.classList.contains('popup__close-button') || evt.target.classList.contains('popup')) {
+//         closePopup(popup);
+//       }
+//   });
+// });
 
 // Создание новой карточки
 const generateNewCard = (item) => {
@@ -84,14 +97,14 @@ addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 addCardBtn.addEventListener('click', () => {
   addCardFormValidator.disableButton();
   addCardForm.reset();
-  openPopup(addCardPopup);  
+  //openPopup(addCardPopup);
+  testPopup.open(); 
+  testPopup.setEventListeners();  
 });
 
 // Обработчик формы редактирования профиля
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  // profileName.textContent = nameInput.value;
-  // profileJob.textContent = jobInput.value;
   userInfo.setUserInfo(userNameInput, userInfoInput);  
   closePopup(editProfilePopup);
 }
