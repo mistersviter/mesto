@@ -69,28 +69,16 @@ const zoomFigure = zoomContainer.querySelector('.popup__zoom-figure');
 const zoomImage = zoomFigure.querySelector('.popup__zoom-image');
 const zoomCaption = zoomFigure.querySelector('.popup__zoom-caption');
 
-// Карточки
+// Selectors
 const cardTemplate = '#card-template';
-const cardsContainer = document.querySelector('.places__cards');
 const popupWithImageSelector = '.popup_type_zoom';
+const profileEditPopupSelector = '.popup_type_edit-profile';
+const addCardPopupSelector = '.popup_type_add-card';
 const cardsContainerSelector = '.places__cards';
-const profileNameSelector = '.profile__name' // селектор имени профиля
-const profileAboutSelector = '.profile__about' // селектор описания профиля
-const popupCardAddSelector = '.popup_card-add' // селектор попапа с формой добавления
-const popupProfileEditSelector = '.popup_profile-edit' // селектор попапа с формой редактирования профиля
-
-// Escape
-const ESC_KEY = 'Escape';
 
 export { 
-  ESC_KEY,
   initialCards,
   cardTemplate,
-  cardsContainer,
-  zoomPopup,
-  zoomImage,
-  zoomCaption,
-  popups,
   formSelectors,
   profileEditBtn,
   addCardBtn,
@@ -105,5 +93,7 @@ export {
   profileNameElement,
   profileInfoElement,
   popupWithImageSelector,
+  profileEditPopupSelector,
+  addCardPopupSelector,
   cardsContainerSelector
 };

@@ -1,5 +1,4 @@
 import Popup from './Popup.js'
-//import { zoomImage, zoomCaption } from '../utils/constans.js';
 
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {

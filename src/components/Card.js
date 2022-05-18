@@ -1,6 +1,3 @@
-//import { zoomPopup, zoomImage, zoomCaption } from '../utils/constans.js';
-//import { openPopup } from './popupManagment.js';
-
 export default class Card {
   constructor({data, handleCardClick}, cardSelector) {
     this._cardSelector = cardSelector;
@@ -19,13 +16,6 @@ export default class Card {
 
     return cardElement;
   }
-
-  // _handleOpenPopup() {
-  //   zoomImage.src = this._image;
-  //   zoomImage.alt = this._title;
-  //   zoomCaption.textContent = this._title;
-  //   openPopup(zoomPopup);
-  // }
 
   _handleLikeCard() {
     this._likeBtn.classList.toggle('card__like-button_active');

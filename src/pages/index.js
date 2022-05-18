@@ -1,8 +1,6 @@
 import {
   initialCards,
   cardTemplate,
-  cardsContainer,
-  popups,
   formSelectors,
   profileEditBtn,
   addCardBtn,
@@ -11,12 +9,13 @@ import {
   addCardPopup,
   cardTitle,
   cardImg,
-  editProfilePopup,
   userNameInput,
   userInfoInput,
   profileNameElement,
   profileInfoElement,
   popupWithImageSelector,
+  profileEditPopupSelector,
+  addCardPopupSelector,
   cardsContainerSelector
 } from '../utils/constans.js';
 
@@ -25,7 +24,7 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-//import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 //import Popup from '../components/Popup.js'; // Для теста
 
@@ -41,7 +40,12 @@ import PopupWithImage from '../components/PopupWithImage.js';
 const userInfo = new UserInfo({
   name: '.profile__title',
   info: '.profile__description'
+});
+
+const profileEditPopup = new PopupWithForm(profileEditPopupSelector, () => {
+  userInfo.setUserInfo(userNameInput, userInfoInput)
 })
+profileEditPopup.setEventListeners()
 
 // Создание экземпляра класса PopupWithImage
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
@@ -133,18 +137,18 @@ addCardBtn.addEventListener('click', () => {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   userInfo.setUserInfo(userNameInput, userInfoInput);  
-  closePopup(editProfilePopup);
+  profileEditPopup.close();
 }
 
 // Вешаем слушатель на клик по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', () => {
   editProfileFormValidator.clearValidationErrors();
   editProfileFormValidator.enableButton();
-  const userData = userInfo.getUserInfo()
-  userNameInput.value = userData.name
-  userInfoInput.value = userData.info
-  openPopup(editProfilePopup);  
+  const userData = userInfo.getUserInfo();
+  userNameInput.value = userData.name;
+  userInfoInput.value = userData.info;
+  profileEditPopup.open();  
 });
 
-// Вешаем слушатель на сабмит формы редактирования профиля
-editProfileForm.addEventListener('submit', handleProfileFormSubmit);
+// // Вешаем слушатель на сабмит формы редактирования профиля
+// editProfileForm.addEventListener('submit', handleProfileFormSubmit);
