@@ -15,17 +15,19 @@ import {
   userNameInput,
   userInfoInput,
   profileNameElement,
-  profileInfoElement
+  profileInfoElement,
+  popupWithImageSelector,
+  cardsContainerSelector
 } from '../utils/constans.js';
 
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
-//import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 //import PopupWithForm from '../components/PopupWithForm.js';
 
-import Popup from '../components/Popup.js'; // Для теста
+//import Popup from '../components/Popup.js'; // Для теста
 
 ////////////////////////////////////////////////////
 // import Card from './Card.js';
@@ -33,13 +35,17 @@ import Popup from '../components/Popup.js'; // Для теста
 // import UserInfo from './UserInfo.js';
 // import { closePopup, openPopup } from './popupManagment.js';
 
-const testPopup = new Popup('.popup_type_add-card'); // тест попапа
+//const testPopup = new Popup('.popup_type_add-card'); // тест попапа
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
   name: '.profile__title',
   info: '.profile__description'
 })
+
+// Создание экземпляра класса PopupWithImage
+const popupWithImage = new PopupWithImage(popupWithImageSelector);
+popupWithImage.setEventListeners();
 
 // Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
 const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
@@ -59,21 +65,42 @@ addCardFormValidator.enableValidation();
 // });
 
 // Создание новой карточки
-const generateNewCard = (item) => {
-  const newCard = new Card(item, cardTemplate);
-  return newCard.generateCard();
+// const generateNewCard = (item) => {
+//   const newCard = new Card(item, cardTemplate);
+//   return newCard.generateCard();
+// };
+
+// Создание новой карточки
+const generateNewCard = (data) => {
+  const card = new Card( {
+    data: data,
+    handleCardClick: () => {
+      popupWithImage.open(data);
+    }
+  }, cardTemplate);
+  return card;
 };
 
-// Вставка карточки в контейнер
-const addNewCard = (item) => {
-  cardsContainer.prepend(item);
-};
+// Вставка карточек в контейнер
+const cardList = new Section( {
+  items: initialCards,
+  renderer: (item) => {
+    const card = generateNewCard(item);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+  } }, cardsContainerSelector);
+cardList.renderItems();
 
-// Создание дефолтных карточек из массива
-initialCards.reverse().forEach((card) => {
-  const newCard = generateNewCard(card);
-  addNewCard(newCard);
-});
+// // Вставка карточки в контейнер
+// const addNewCard = (item) => {
+//   cardsContainer.prepend(item);
+// };
+
+// // Создание дефолтных карточек из массива
+// initialCards.reverse().forEach((card) => {
+//   const newCard = generateNewCard(card);
+//   addNewCard(newCard);
+// });
 
 // Обработчик формы добавления карточки
 function handleAddCardFormSubmit(evt) {

@@ -1,11 +1,13 @@
-import { zoomPopup, zoomImage, zoomCaption } from '../utils/constans.js';
-import { openPopup } from './popupManagment.js';
+//import { zoomPopup, zoomImage, zoomCaption } from '../utils/constans.js';
+//import { openPopup } from './popupManagment.js';
 
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor({data, handleCardClick}, cardSelector) {
     this._cardSelector = cardSelector;
     this._title = data.name;
     this._image = data.link;
+    this._handleCardClick = handleCardClick;
+    this._cardSelector = cardSelector;
   }
 
   _getTemplate() {
@@ -18,12 +20,12 @@ export default class Card {
     return cardElement;
   }
 
-  _handleOpenPopup() {
-    zoomImage.src = this._image;
-    zoomImage.alt = this._title;
-    zoomCaption.textContent = this._title;
-    openPopup(zoomPopup);
-  }
+  // _handleOpenPopup() {
+  //   zoomImage.src = this._image;
+  //   zoomImage.alt = this._title;
+  //   zoomCaption.textContent = this._title;
+  //   openPopup(zoomPopup);
+  // }
 
   _handleLikeCard() {
     this._likeBtn.classList.toggle('card__like-button_active');
@@ -38,8 +40,10 @@ export default class Card {
     this._deleteBtn.addEventListener('click', () => this._handleRemoveCard());
 
     this._cardImage.addEventListener('click', () => {
-      this._handleOpenPopup();
-    });
+      this._handleCardClick({ 
+        name: this._name,
+        src: this._link });
+      })
   }
 
   generateCard() {

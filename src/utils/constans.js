@@ -72,8 +72,38 @@ const zoomCaption = zoomFigure.querySelector('.popup__zoom-caption');
 // Карточки
 const cardTemplate = '#card-template';
 const cardsContainer = document.querySelector('.places__cards');
+const popupWithImageSelector = '.popup_type_zoom';
+const cardsContainerSelector = '.places__cards';
+const profileNameSelector = '.profile__name' // селектор имени профиля
+const profileAboutSelector = '.profile__about' // селектор описания профиля
+const popupCardAddSelector = '.popup_card-add' // селектор попапа с формой добавления
+const popupProfileEditSelector = '.popup_profile-edit' // селектор попапа с формой редактирования профиля
 
 // Escape
 const ESC_KEY = 'Escape';
 
-export { ESC_KEY, initialCards, cardTemplate, cardsContainer, zoomPopup, zoomImage, zoomCaption, popups, formSelectors, profileEditBtn, addCardBtn, editProfileForm, addCardForm, addCardPopup, cardTitle, cardImg, editProfilePopup, userNameInput, userInfoInput, profileNameElement, profileInfoElement };
+export { 
+  ESC_KEY,
+  initialCards,
+  cardTemplate,
+  cardsContainer,
+  zoomPopup,
+  zoomImage,
+  zoomCaption,
+  popups,
+  formSelectors,
+  profileEditBtn,
+  addCardBtn,
+  editProfileForm,
+  addCardForm,
+  addCardPopup,
+  cardTitle,
+  cardImg,
+  editProfilePopup,
+  userNameInput,
+  userInfoInput,
+  profileNameElement,
+  profileInfoElement,
+  popupWithImageSelector,
+  cardsContainerSelector
+};
