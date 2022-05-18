@@ -6,7 +6,6 @@ import {
   addCardBtn,
   editProfileForm,
   addCardForm,
-  addCardPopup,
   cardTitle,
   cardImg,
   userNameInput,
@@ -42,10 +41,20 @@ const userInfo = new UserInfo({
   info: '.profile__description'
 });
 
+// Создание экземпляра класса PopupWithForm для редактирования профиля
 const profileEditPopup = new PopupWithForm(profileEditPopupSelector, () => {
   userInfo.setUserInfo(userNameInput, userInfoInput)
-})
-profileEditPopup.setEventListeners()
+});
+profileEditPopup.setEventListeners();
+
+// Создание экземпляра класса PopupWithForm для добавления новой карточки
+const addCardPopup = new PopupWithForm(addCardPopupSelector, (newValues) => {
+  const card = generateNewCard(newValues);
+  const cardElement = card.generateCard();
+  cardList.addItem(cardElement);
+  addCardFormValidator.disableButton();
+});
+addCardPopup.setEventListeners();
 
 // Создание экземпляра класса PopupWithImage
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
@@ -106,39 +115,40 @@ cardList.renderItems();
 //   addNewCard(newCard);
 // });
 
-// Обработчик формы добавления карточки
-function handleAddCardFormSubmit(evt) {
-  evt.preventDefault();
+// // Обработчик формы добавления карточки
+// function handleAddCardFormSubmit(evt) {
+//   evt.preventDefault();
 
-  const card = {
-    name: cardTitle.value,
-    link: cardImg.value
-  }
+//   const card = {
+//     name: cardTitle.value,
+//     link: cardImg.value
+//   }
 
-  const newCard = generateNewCard(card);
-  addNewCard(newCard);
-  addCardForm.reset();
-  closePopup(addCardPopup);
-}
+//   const newCard = generateNewCard(card);
+//   addNewCard(newCard);
+//   addCardForm.reset();
+//   closePopup(addCardPopup);
+// }
 
-// Вешаем слушатель на сабмит формы добавления новой карточки
-addCardForm.addEventListener('submit', handleAddCardFormSubmit);
+// // Вешаем слушатель на сабмит формы добавления новой карточки
+// addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
 // Вешаем слушатель на клик по кнопке добавления новой карточки
 addCardBtn.addEventListener('click', () => {
   addCardFormValidator.disableButton();
   addCardForm.reset();
-  //openPopup(addCardPopup);
-  testPopup.open(); 
-  testPopup.setEventListeners();  
+  // //openPopup(addCardPopup);
+  // testPopup.open(); 
+  // testPopup.setEventListeners();
+  addCardPopup.open();  
 });
 
-// Обработчик формы редактирования профиля
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  userInfo.setUserInfo(userNameInput, userInfoInput);  
-  profileEditPopup.close();
-}
+// // Обработчик формы редактирования профиля
+// function handleProfileFormSubmit(evt) {
+//   evt.preventDefault();
+//   userInfo.setUserInfo(userNameInput, userInfoInput);  
+//   profileEditPopup.close();
+// }
 
 // Вешаем слушатель на клик по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', () => {
