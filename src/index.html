@@ -9,11 +9,11 @@
 </head>
 <body class="page">
   <header class="header page__header">
-    <img src="./images/logo.svg" alt="лого" class="logo">
+    <img src="<%=require('./images/logo.svg')%>" alt="лого" class="logo">
   </header> 
   <main class="main">
     <section class="profile page__profile">
-      <img src="./images/Yuri_Gagarin.jpg" alt="аватар" class="profile__avatar">
+      <img src="<%=require('./images/Yuri_Gagarin.jpg')%>" alt="аватар" class="profile__avatar">
       <div class="profile__info">
         <h1 class="profile__title">Юрий Алексеевич Гагарин</h1>
         <button type="button" aria-label="Редактировать профиль" class="button profile__edit-profile-button"></button>
@@ -81,6 +81,5 @@
           <button type="button" aria-label="Удалить карточку" class="card__delete-button"></button>
     </li>
   </template>
-  <script type="module" src="./pages/index.js"></script>
 </body>
 </html>

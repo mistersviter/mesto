@@ -1,27 +1,34 @@
+const branguaHorrorSutas = new URL('../images/card_image1.jpg', import.meta.url);
+const aeronasTu = new URL('../images/card_image2.jpg', import.meta.url);
+const ogos = new URL('../images/card_image3.jpg', import.meta.url);
+const ibi = new URL('../images/card_image4.jpg', import.meta.url);
+const khorsara = new URL('../images/card_image5.jpg', import.meta.url);
+const vourbediuMonoNakhl = new URL('../images/card_image6.jpg', import.meta.url);
+
 const initialCards = [
   {
     name: 'Брангуа Харрор Сутас',
-    link: './images/card_image1.jpg'
+    link: branguaHorrorSutas
   },
   {
     name: 'Аэронас Ту',
-    link: './images/card_image2.jpg'
+    link: aeronasTu
   },
   {
     name: 'Огос',
-    link: './images/card_image3.jpg'
+    link: ogos
   },
   {
     name: 'Иби',
-    link: './images/card_image4.jpg'
+    link: ibi
   },
   {
     name: 'Хорсара',
-    link: './images/card_image5.jpg'
+    link: khorsara
   },
   {
     name: 'Вурбедиу Моно Нахл',
-    link: './images/card_image6.jpg'
+    link: vourbediuMonoNakhl
   }
 ];
 

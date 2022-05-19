@@ -1,3 +1,5 @@
+import './pages/index.css';
+
 import {
   initialCards,
   cardTemplate,
@@ -12,14 +14,14 @@ import {
   profileEditPopupSelector,
   addCardPopupSelector,
   cardsContainerSelector
-} from '../utils/constans.js';
+} from '../src/utils/constans.js';
 
-import UserInfo from '../components/UserInfo.js';
-import Section from '../components/Section.js';
-import Card from '../components/Card.js';
-import FormValidator from '../components/FormValidator.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../src/components/UserInfo.js';
+import Section from '../src/components/Section.js';
+import Card from '../src/components/Card.js';
+import FormValidator from '../src/components/FormValidator.js';
+import PopupWithImage from '../src/components/PopupWithImage.js';
+import PopupWithForm from '../src/components/PopupWithForm.js';
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
