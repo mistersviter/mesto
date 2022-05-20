@@ -13,7 +13,9 @@ import {
   popupWithImageSelector,
   profileEditPopupSelector,
   addCardPopupSelector,
-  cardsContainerSelector
+  cardsContainerSelector,
+  profileNameElement,
+  profileInfoElement
 } from '../src/utils/constans.js';
 
 import UserInfo from '../src/components/UserInfo.js';
@@ -25,22 +27,27 @@ import PopupWithForm from '../src/components/PopupWithForm.js';
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
-  name: '.profile__title',
-  info: '.profile__description'
+  userName: profileNameElement,
+  userDescription: profileInfoElement
 });
 
 // Создание экземпляра класса PopupWithForm для редактирования профиля
-const profileEditPopup = new PopupWithForm(profileEditPopupSelector, () => {
-  userInfo.setUserInfo(userNameInput, userInfoInput)
+const profileEditPopup = new PopupWithForm(profileEditPopupSelector, {
+  handleFormSubmit: (newValues) => {
+    userInfo.setUserInfo(newValues);
+  }
 });
 profileEditPopup.setEventListeners();
 
+
 // Создание экземпляра класса PopupWithForm для добавления новой карточки
-const addCardPopup = new PopupWithForm(addCardPopupSelector, (newValues) => {
-  const card = generateNewCard(newValues);
-  const cardElement = card.generateCard();
-  cardList.addItem(cardElement);
-  addCardFormValidator.disableButton();
+const addCardPopup = new PopupWithForm(addCardPopupSelector, {
+  handleFormSubmit: (newValues) => {
+    const card = generateNewCard(newValues);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+    addCardFormValidator.disableButton();
+  }
 });
 addCardPopup.setEventListeners();
 
@@ -58,7 +65,7 @@ addCardFormValidator.enableValidation();
 
 // Создание новой карточки
 const generateNewCard = (data) => {
-  const card = new Card( {
+  const card = new Card({
     data: data,
     handleCardClick: () => {
       popupWithImage.open(data);
@@ -89,7 +96,7 @@ profileEditBtn.addEventListener('click', () => {
   editProfileFormValidator.clearValidationErrors();
   editProfileFormValidator.enableButton();
   const userData = userInfo.getUserInfo();
-  userNameInput.value = userData.name;
-  userInfoInput.value = userData.info;
+  userNameInput.value = userData.userName;
+  userInfoInput.value = userData.userDescription;
   profileEditPopup.open();  
 });

@@ -96,5 +96,7 @@ export {
   popupWithImageSelector,
   profileEditPopupSelector,
   addCardPopupSelector,
-  cardsContainerSelector
+  cardsContainerSelector,
+  profileNameElement,
+  profileInfoElement
 };
