@@ -36,6 +36,18 @@ export default class Api {
     })
       .then(this._handleResponse)
   }
+
+  addUserCard(cardData) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: cardData.name,
+        link: cardData.link
+      })
+    })
+      .then(this._handleResponse)
+  }
   // getInitialData() {
   //   return Promise.all([this.getInitialCards(), this.getUserInfo()])
   // }

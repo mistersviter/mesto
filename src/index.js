@@ -43,6 +43,7 @@ const profileEditPopup = new PopupWithForm(profileEditPopupSelector, {
       .then(userData => {
         userInfo.setUserInfo(userData)
       })
+      .catch(err => console.log(err));
   }
 });
 profileEditPopup.setEventListeners();
@@ -51,10 +52,14 @@ profileEditPopup.setEventListeners();
 // Создание экземпляра класса PopupWithForm для добавления новой карточки
 const addCardPopup = new PopupWithForm(addCardPopupSelector, {
   handleFormSubmit: (newValues) => {
-    const card = generateNewCard(newValues);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-    addCardFormValidator.disableButton();
+    api.addUserCard(newValues)
+      .then(cardData => {
+        const card = generateNewCard(cardData);
+        const cardElement = card.generateCard();
+        cardList.addItem(cardElement);
+        addCardFormValidator.disableButton();
+      })
+      .catch(err => console.log(err));
   }
 });
 addCardPopup.setEventListeners();
@@ -82,14 +87,13 @@ const generateNewCard = (data) => {
   return card;
 };
 
-// Вставка карточек в контейнер
-// const cardList = new Section( {
-//   renderer: (item) => {
-//     const card = generateNewCard(item);
-//     const cardElement = card.generateCard();
-//     cardList.addItem(cardElement);
-//   } }, cardsContainerSelector);
-// cardList.renderItems();
+// Создание экземпляра класса Section
+const cardList = new Section({
+  renderer: (item) => {
+    const card = generateNewCard(item);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+  }}, cardsContainerSelector);
 
 // Вешаем слушатель на клик по кнопке добавления новой карточки
 addCardBtn.addEventListener('click', () => {
@@ -112,16 +116,10 @@ api.getUserInfo()
   .then(userData => {
     userInfo.setUserInfo(userData)
   })
+  .catch(err => console.log(err));
 
 api.getInitialCards()
   .then(cards => {
-    const cardList = new Section( {
-      items: cards,
-      renderer: (item) => {
-        const card = generateNewCard(item);
-        const cardElement = card.generateCard();
-        cardList.addItem(cardElement);
-      } }, cardsContainerSelector);
-    cardList.renderItems();
+    cardList.renderItems(cards);
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err));
