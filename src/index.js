@@ -24,6 +24,15 @@ import Card from '../src/components/Card.js';
 import FormValidator from '../src/components/FormValidator.js';
 import PopupWithImage from '../src/components/PopupWithImage.js';
 import PopupWithForm from '../src/components/PopupWithForm.js';
+import Api from '../src/components/Api.js';
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
+  headers: {
+    authorization: '8b1d9511-936f-474d-a48e-0881c6bc032b',
+    'Content-Type': 'application/json'
+  }
+});
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
@@ -75,14 +84,13 @@ const generateNewCard = (data) => {
 };
 
 // Вставка карточек в контейнер
-const cardList = new Section( {
-  items: initialCards,
-  renderer: (item) => {
-    const card = generateNewCard(item);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-  } }, cardsContainerSelector);
-cardList.renderItems();
+// const cardList = new Section( {
+//   renderer: (item) => {
+//     const card = generateNewCard(item);
+//     const cardElement = card.generateCard();
+//     cardList.addItem(cardElement);
+//   } }, cardsContainerSelector);
+// cardList.renderItems();
 
 // Вешаем слушатель на клик по кнопке добавления новой карточки
 addCardBtn.addEventListener('click', () => {
@@ -100,3 +108,22 @@ profileEditBtn.addEventListener('click', () => {
   userInfoInput.value = userData.userDescription;
   profileEditPopup.open();  
 });
+
+api.getUserInfo()
+  .then(userData => {
+    console.log(userData);
+    userInfo.setUserInfo(userData)
+  })
+
+api.getInitialCards()
+  .then(cards => {
+    const cardList = new Section( {
+      items: cards,
+      renderer: (item) => {
+        const card = generateNewCard(item);
+        const cardElement = card.generateCard();
+        cardList.addItem(cardElement);
+      } }, cardsContainerSelector);
+    cardList.renderItems();
+  })
+  .catch(err => console.log(err))
