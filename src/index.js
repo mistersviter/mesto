@@ -15,7 +15,8 @@ import {
   addCardPopupSelector,
   cardsContainerSelector,
   profileNameElement,
-  profileInfoElement
+  profileInfoElement,
+  config
 } from '../src/utils/constans.js';
 
 import UserInfo from '../src/components/UserInfo.js';
@@ -26,13 +27,8 @@ import PopupWithImage from '../src/components/PopupWithImage.js';
 import PopupWithForm from '../src/components/PopupWithForm.js';
 import Api from '../src/components/Api.js';
 
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
-  headers: {
-    authorization: '8b1d9511-936f-474d-a48e-0881c6bc032b',
-    'Content-Type': 'application/json'
-  }
-});
+// Создание экземпляра класса Api
+const api = new Api(config);
 
 // Создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
@@ -43,7 +39,10 @@ const userInfo = new UserInfo({
 // Создание экземпляра класса PopupWithForm для редактирования профиля
 const profileEditPopup = new PopupWithForm(profileEditPopupSelector, {
   handleFormSubmit: (newValues) => {
-    userInfo.setUserInfo(newValues);
+    api.updateUserInfo(newValues)
+      .then(userData => {
+        userInfo.setUserInfo(userData)
+      })
   }
 });
 profileEditPopup.setEventListeners();
@@ -111,7 +110,6 @@ profileEditBtn.addEventListener('click', () => {
 
 api.getUserInfo()
   .then(userData => {
-    console.log(userData);
     userInfo.setUserInfo(userData)
   })
 

@@ -16,7 +16,6 @@ export default class Api {
       headers: this._headers
     })
       .then(this._handleResponse)
-      //.then(data => console.log(data))
   }
 
   getInitialCards() {
@@ -24,7 +23,18 @@ export default class Api {
       headers: this._headers
     })
       .then(this._handleResponse)
-      //.then(data => console.log(data))
+  }
+
+  updateUserInfo(userData) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: userData.name,
+        about: userData.about
+      })
+    })
+      .then(this._handleResponse)
   }
   // getInitialData() {
   //   return Promise.all([this.getInitialCards(), this.getUserInfo()])

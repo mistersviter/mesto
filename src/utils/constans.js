@@ -32,6 +32,14 @@ const initialCards = [
   }
 ];
 
+const config = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
+  headers: {
+    authorization: '8b1d9511-936f-474d-a48e-0881c6bc032b',
+    'Content-Type': 'application/json'
+  }
+}
+
 const formSelectors = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -98,5 +106,6 @@ export {
   addCardPopupSelector,
   cardsContainerSelector,
   profileNameElement,
-  profileInfoElement
+  profileInfoElement,
+  config
 };
