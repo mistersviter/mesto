@@ -1,5 +1,3 @@
-import { data } from "browserslist";
-
 export default class Card {
   constructor({data, handleCardClick, handleDeleteCardClick, handleCardLikeClick}, cardSelector, userId) {
     this._cardSelector = cardSelector;
@@ -13,7 +11,7 @@ export default class Card {
     this._handleCardLikeClick = handleCardLikeClick;
     this._cardSelector = cardSelector;
     this._isOwner();
-    this.isLiked();
+    this._isLiked();
   }
 
   _getTemplate() {
@@ -67,7 +65,7 @@ export default class Card {
     this._updateLikeStatus();
   }
 
-  isLiked() {
+  _isLiked() {
     if (this._likes.some(obj => obj._id === this._userId)) {
       this._likedByUser = true;
     } else {
