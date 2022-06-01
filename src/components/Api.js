@@ -75,13 +75,16 @@ export default class Api {
       .then(this._handleResponse)
   }
 
-  // getCardLikes(cardData) {
-  //   return fetch(`${this._url}/cards`, {
-  //     method: 'GET',
-  //     headers: this._headers,
-  //   })
-  //     .then(this._handleResponse)
-  // }
+  updateUserAvatar(userData) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: userData.avatar
+      })
+    })
+      .then(this._handleResponse)
+  }
 
   // getInitialData() {
   //   return Promise.all([this.getInitialCards(), this.getUserInfo()])

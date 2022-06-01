@@ -12,7 +12,10 @@
   </header> 
   <main class="main">
     <section class="profile page__profile">
-      <img src="<%=require('./images/Yuri_Gagarin.jpg')%>" alt="аватар" class="profile__avatar">
+      <div class="profile__avatar-wrapper">
+        <img src="#" alt="аватар" class="profile__avatar">
+        <button type="button" aria-label="Изменить аватар" class="profile__avatar-change-button"></button>
+      </div>
       <div class="profile__info">
         <h1 class="profile__title"></h1>
         <button type="button" aria-label="Редактировать профиль" class="button profile__edit-profile-button"></button>
@@ -28,6 +31,19 @@
   <footer class="footer">
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
+  <div class="popup popup_type_change-avatar">
+    <div class="popup__container">
+      <button type="button" aria-label="Закрыть" class="popup__close-button"></button>
+      <h2 class="popup__caption">Обновить аватар</h2>
+      <form id="changeAvatarForm" class="popup__form" name="changeAvatarForm">        
+        <label class="popup__form-field">
+          <input id="avatar-image-input" type="url" class="popup__input popup__input_type_avatar-image" name="avatar" placeholder="Ссылка на картинку" required>
+          <span class="popup__input-error avatar-image-input-error"></span>
+        </label>
+        <button type="submit" class="popup__submit-button popup__submit-button_inactive" disabled>Сохранить</button>
+      </form>
+    </div>  
+  </div>
   <div class="popup popup_type_edit-profile">
     <div class="popup__container">
       <button type="button" aria-label="Закрыть" class="popup__close-button"></button>

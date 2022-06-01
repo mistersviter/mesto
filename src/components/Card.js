@@ -75,6 +75,10 @@ export default class Card {
     }
   }
 
+  getCardLikeStatus() {
+    return this._likedByUser;
+  }
+
   generateCard() {
     
     this._element = this._getTemplate();
