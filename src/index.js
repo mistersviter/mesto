@@ -16,7 +16,8 @@ import {
   cardsContainerSelector,
   profileNameElement,
   profileInfoElement,
-  config
+  config,
+  popupWithSubmitSelector
 } from '../src/utils/constans.js';
 
 import UserInfo from '../src/components/UserInfo.js';
@@ -25,6 +26,7 @@ import Card from '../src/components/Card.js';
 import FormValidator from '../src/components/FormValidator.js';
 import PopupWithImage from '../src/components/PopupWithImage.js';
 import PopupWithForm from '../src/components/PopupWithForm.js';
+import PopupWithSubmit from '../src/components/PopupWithSubmit.js';
 import Api from '../src/components/Api.js';
 
 // Создание экземпляра класса Api
@@ -68,6 +70,20 @@ addCardPopup.setEventListeners();
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 popupWithImage.setEventListeners();
 
+// Создание экземпляра класса PopupWithSubmit
+const popupWithSubmit = new PopupWithSubmit({
+  handleDeleteCardSubmit: (data) => {
+    api.deleteUserCard(data)
+      .then(() => {
+        // Возвращаем объект карточки для удаления
+        const cardToDelete = popupWithSubmit.getCardElement();
+        cardToDelete.removeCard();
+      })
+      .catch(err => console.log(err));
+  }
+}, popupWithSubmitSelector);
+popupWithSubmit.setEventListeners();
+
 // Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
 const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
 editProfileFormValidator.enableValidation();
@@ -82,8 +98,16 @@ const generateNewCard = (data) => {
     data: data,
     handleCardClick: () => {
       popupWithImage.open(data);
-    }
-  }, cardTemplate);
+    },
+    handleDeleteCardClick: () => {      
+      const obj = {
+        data: data,
+        card: card
+      }
+      // Передача объекта карточки в попап
+      popupWithSubmit.open(obj);
+    }    
+  }, cardTemplate, userId);
   return card;
 };
 
@@ -112,9 +136,12 @@ profileEditBtn.addEventListener('click', () => {
   profileEditPopup.open();  
 });
 
+let userId;
+
 api.getUserInfo()
   .then(userData => {
-    userInfo.setUserInfo(userData)
+    userInfo.setUserInfo(userData);
+    userId = userData._id
   })
   .catch(err => console.log(err));
 

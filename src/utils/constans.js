@@ -90,6 +90,7 @@ const popupWithImageSelector = '.popup_type_zoom';
 const profileEditPopupSelector = '.popup_type_edit-profile';
 const addCardPopupSelector = '.popup_type_add-card';
 const cardsContainerSelector = '.places__cards';
+const popupWithSubmitSelector = '.popup_type_delete-card'
 
 export { 
   initialCards,
@@ -107,5 +108,6 @@ export {
   cardsContainerSelector,
   profileNameElement,
   profileInfoElement,
-  config
+  config,
+  popupWithSubmitSelector
 };

@@ -13,6 +13,7 @@ export default class Api {
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
+      method: 'GET',
       headers: this._headers
     })
       .then(this._handleResponse)
@@ -20,6 +21,7 @@ export default class Api {
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
+      method: 'GET',
       headers: this._headers
     })
       .then(this._handleResponse)
@@ -48,6 +50,23 @@ export default class Api {
     })
       .then(this._handleResponse)
   }
+
+  deleteUserCard(cardData) {
+    return fetch(`${this._url}/cards/${cardData._id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(this._handleResponse)
+  }
+
+  // getCardLikes(cardData) {
+  //   return fetch(`${this._url}/cards`, {
+  //     method: 'GET',
+  //     headers: this._headers,
+  //   })
+  //     .then(this._handleResponse)
+  // }
+
   // getInitialData() {
   //   return Promise.all([this.getInitialCards(), this.getUserInfo()])
   // }
