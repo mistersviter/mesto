@@ -42,71 +42,25 @@ const userInfo = new UserInfo({
   userAvatar: avatarElement
 });
 
-// Создание экземпляра класса PopupWithForm для изменения аватара
-const changeAvatarPopup = new PopupWithForm(changeAvatarPopupSelector, {
-  handleFormSubmit: (newValues) => {
-    api.updateUserAvatar(newValues)
-      .then((res) => userInfo.setUserAvatar(res))
-  }
-});
-changeAvatarPopup.setEventListeners();
+// Создание экземпляра класса Section
+const cardList = new Section({
+  renderer: (item) => {
+    const card = generateNewCard(item);
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+  }}, cardsContainerSelector);
 
-// Создание экземпляра класса PopupWithForm для редактирования профиля
-const profileEditPopup = new PopupWithForm(profileEditPopupSelector, {
-  handleFormSubmit: (newValues) => {
-    api.updateUserInfo(newValues)
-      .then(userData => {
-        userInfo.setUserInfo(userData)
-      })
-      .catch(err => console.log(err));
-  }
-});
-profileEditPopup.setEventListeners();
-
-// Создание экземпляра класса PopupWithForm для добавления новой карточки
-const addCardPopup = new PopupWithForm(addCardPopupSelector, {
-  handleFormSubmit: (newValues) => {
-    api.addUserCard(newValues)
-      .then(cardData => {
-        const card = generateNewCard(cardData);
-        const cardElement = card.generateCard();
-        cardList.addItem(cardElement);
-        addCardFormValidator.disableButton();
-      })
-      .catch(err => console.log(err));
-  }
-});
-addCardPopup.setEventListeners();
-
-// Создание экземпляра класса PopupWithImage
-const popupWithImage = new PopupWithImage(popupWithImageSelector);
-popupWithImage.setEventListeners();
-
-// Создание экземпляра класса PopupWithSubmit
-const popupWithSubmit = new PopupWithSubmit({
-  handleDeleteCardSubmit: (data) => {
-    api.deleteUserCard(data)
-      .then(() => {
-        // Возвращаем объект карточки для удаления
-        const cardToDelete = popupWithSubmit.getCardElement();
-        cardToDelete.removeCard();
-      })
-      .catch(err => console.log(err));
-  }
-}, popupWithSubmitSelector);
-popupWithSubmit.setEventListeners();
-
-// Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
-const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
-editProfileFormValidator.enableValidation();
-
-// Создание объекта валидации добавления новой карточки и вызов метода enableValidation
-const addCardFormValidator = new FormValidator(formSelectors, addCardForm);
-addCardFormValidator.enableValidation();
-
-// Создание объекта валидации формы обновления аватара и вызов метода enableValidation
-const changeAvatarFormValidator = new FormValidator(formSelectors, changeAvatarForm);
-changeAvatarFormValidator.enableValidation();
+let userId;
+// Получение информации о карточках и о пользователе с сервера
+api.getInitialData()
+  .then(([cards, userData]) => {
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData);
+    userId = userData._id
+    
+    cardList.renderItems(cards);
+  })
+  .catch((err) => console.log(err));
 
 // Создание новой карточки
 const generateNewCard = (data) => {
@@ -144,13 +98,86 @@ const generateNewCard = (data) => {
   return card;
 };
 
-// Создание экземпляра класса Section
-const cardList = new Section({
-  renderer: (item) => {
-    const card = generateNewCard(item);
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-  }}, cardsContainerSelector);
+// Создание экземпляра класса PopupWithForm для изменения аватара
+const changeAvatarPopup = new PopupWithForm(changeAvatarPopupSelector, {
+  handleFormSubmit: (newValues) => {
+    api.updateUserAvatar(newValues)
+      .then((res) => userInfo.setUserAvatar(res))
+  }
+});
+changeAvatarPopup.setEventListeners();
+
+// Создание экземпляра класса PopupWithForm для редактирования профиля
+const profileEditPopup = new PopupWithForm(profileEditPopupSelector, {
+  handleFormSubmit: (newValues) => {
+    profileEditPopup.renderLoading(true);
+    api.updateUserInfo(newValues)
+      .then(userData => {
+        userInfo.setUserInfo(userData)
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        profileEditPopup.renderLoading(false);
+        profileEditPopup.close();
+      });
+  }
+});
+profileEditPopup.setEventListeners();
+
+// Создание экземпляра класса PopupWithForm для добавления новой карточки
+const addCardPopup = new PopupWithForm(addCardPopupSelector, {
+  handleFormSubmit: (newValues) => {
+    addCardPopup.renderLoading(true);
+    api.addUserCard(newValues)
+      .then(cardData => {
+        const card = generateNewCard(cardData);
+        const cardElement = card.generateCard();
+        cardList.addItem(cardElement);
+        addCardFormValidator.disableButton();
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        addCardPopup.renderLoading(false);
+        addCardPopup.close();
+      });
+  }
+});
+addCardPopup.setEventListeners();
+
+// Создание экземпляра класса PopupWithImage
+const popupWithImage = new PopupWithImage(popupWithImageSelector);
+popupWithImage.setEventListeners();
+
+// Создание экземпляра класса PopupWithSubmit
+const popupWithSubmit = new PopupWithSubmit({
+  handleDeleteCardSubmit: (data) => {
+    popupWithSubmit.renderLoading(true);
+    api.deleteUserCard(data)
+      .then(() => {
+        // Возвращаем объект карточки для удаления
+        const cardToDelete = popupWithSubmit.getCardElement();
+        cardToDelete.removeCard();
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        popupWithSubmit.renderLoading(false);
+        popupWithSubmit.close();
+      });
+  }
+}, popupWithSubmitSelector);
+popupWithSubmit.setEventListeners();
+
+// Создание объекта валидации формы редактирования профиля и вызов метода enableValidation
+const editProfileFormValidator = new FormValidator(formSelectors, editProfileForm);
+editProfileFormValidator.enableValidation();
+
+// Создание объекта валидации добавления новой карточки и вызов метода enableValidation
+const addCardFormValidator = new FormValidator(formSelectors, addCardForm);
+addCardFormValidator.enableValidation();
+
+// Создание объекта валидации формы обновления аватара и вызов метода enableValidation
+const changeAvatarFormValidator = new FormValidator(formSelectors, changeAvatarForm);
+changeAvatarFormValidator.enableValidation();
 
 // Вешаем слушатель на клик по кнопке добавления новой карточки
 addCardBtn.addEventListener('click', () => {
@@ -177,19 +204,3 @@ changeAvatarBtn.addEventListener('click', () => {
   changeAvatarForm.reset();
   changeAvatarPopup.open();
 });
-
-let userId;
-
-api.getUserInfo()
-  .then(userData => {
-    userInfo.setUserInfo(userData);
-    userInfo.setUserAvatar(userData);
-    userId = userData._id
-  })
-  .catch(err => console.log(err));
-
-api.getInitialCards()
-  .then(cards => {
-    cardList.renderItems(cards);
-  })
-  .catch(err => console.log(err));

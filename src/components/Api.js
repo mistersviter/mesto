@@ -86,7 +86,7 @@ export default class Api {
       .then(this._handleResponse)
   }
 
-  // getInitialData() {
-  //   return Promise.all([this.getInitialCards(), this.getUserInfo()])
-  // }
+  getInitialData() {
+    return Promise.all([this.getInitialCards(), this.getUserInfo()])
+  }
 }
