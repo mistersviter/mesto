@@ -1,16 +1,19 @@
 import { data } from "browserslist";
 
 export default class Card {
-  constructor({data, handleCardClick, handleDeleteCardClick}, cardSelector, userId) {
+  constructor({data, handleCardClick, handleDeleteCardClick, handleCardLikeClick}, cardSelector, userId) {
     this._cardSelector = cardSelector;
     this._title = data.name;
     this._image = data.link;
-    this._likesCount = data.likes.length;
+    this._likes = data.likes;
     this._ownerId = data.owner._id;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick;
+    this._handleCardLikeClick = handleCardLikeClick;
     this._cardSelector = cardSelector;
+    this._isOwner();
+    this.isLiked();
   }
 
   _getTemplate() {
@@ -23,7 +26,7 @@ export default class Card {
     return cardElement;
   }
 
-  _handleLikeCard() {
+  _toggleLikeBtnStatus() {
     this._likeBtn.classList.toggle('card__like-button_active');
   }
 
@@ -31,8 +34,12 @@ export default class Card {
     this._element.remove();
   }
 
+  _updateLikeStatus() {
+    this._likedByUser = !this._likedByUser;
+  }
+
   _setEventListeners() {
-    this._likeBtn.addEventListener('click', () => this._handleLikeCard());
+    this._likeBtn.addEventListener('click', () => this._handleCardLikeClick());
     this._deleteBtn.addEventListener('click', () => this._handleDeleteCardClick());
 
     this._cardImage.addEventListener('click', () => {
@@ -50,8 +57,25 @@ export default class Card {
     }   
   }
 
+  _updateCardLikesCounter(updateData) {
+    this._likeCounter.textContent = updateData.likes.length;
+  }
+
+  updateCardLikeInfo(updateData) {
+    this._updateCardLikesCounter(updateData);
+    this._toggleLikeBtnStatus();
+    this._updateLikeStatus();
+  }
+
+  isLiked() {
+    if (this._likes.some(obj => obj._id === this._userId)) {
+      this._likedByUser = true;
+    } else {
+      this._likedByUser = false;
+    }
+  }
+
   generateCard() {
-    this._isOwner();
     
     this._element = this._getTemplate();
 
@@ -61,9 +85,14 @@ export default class Card {
     this._likeCounter = this._element.querySelector('.card__like-counter');
     this._deleteBtn = this._element.querySelector('.card__delete-button');
 
+    // Удаление иконки корзины, если карточка загружена не пользователем
     if (!this._ownedByUser) {
-      //this._deleteBtn.style.display = 'none';
       this._deleteBtn.remove();
+    }
+
+    // Закрашиваем сердечко если пользователь уже лайкал карточку
+    if (this._likedByUser) {
+      this._toggleLikeBtnStatus();
     }
 
     this._setEventListeners();
@@ -71,7 +100,7 @@ export default class Card {
     this._cardImage.src = this._image;
     this._cardTitle.textContent = this._title;
     this._cardImage.alt = this._title;
-    this._likeCounter.textContent = this._likesCount;    
+    this._likeCounter.textContent = this._likes.length;    
 
     return this._element;
   }

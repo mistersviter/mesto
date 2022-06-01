@@ -106,7 +106,24 @@ const generateNewCard = (data) => {
       }
       // Передача объекта карточки в попап
       popupWithSubmit.open(obj);
-    }    
+    },
+    handleCardLikeClick: () => {
+      if (card._likedByUser) {
+        api.removeLikeCard(data)
+          .then((res) => {
+            card.updateCardLikeInfo(res);
+          })
+          .catch(err => console.log(err));
+      }
+      else {
+        //console.log(`Статус перед лайком: ${card._likedByUser}`);
+        api.likeCard(data)
+          .then((res) => {
+            card.updateCardLikeInfo(res);
+          })
+          .catch(err => console.log(err));
+      }      
+    }
   }, cardTemplate, userId);
   return card;
 };
