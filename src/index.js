@@ -101,8 +101,14 @@ const generateNewCard = (data) => {
 // Создание экземпляра класса PopupWithForm для изменения аватара
 const changeAvatarPopup = new PopupWithForm(changeAvatarPopupSelector, {
   handleFormSubmit: (newValues) => {
+    changeAvatarPopup.renderLoading(true);
     api.updateUserAvatar(newValues)
-      .then((res) => userInfo.setUserAvatar(res))
+      .then((res) => {
+        userInfo.setUserAvatar(res);
+        changeAvatarPopup.close();
+      })
+      .catch(err => console.log(err))
+      .finally(() => changeAvatarPopup.renderLoading(false));
   }
 });
 changeAvatarPopup.setEventListeners();
@@ -113,13 +119,11 @@ const profileEditPopup = new PopupWithForm(profileEditPopupSelector, {
     profileEditPopup.renderLoading(true);
     api.updateUserInfo(newValues)
       .then(userData => {
-        userInfo.setUserInfo(userData)
+        userInfo.setUserInfo(userData);
+        profileEditPopup.close();
       })
       .catch(err => console.log(err))
-      .finally(() => {
-        profileEditPopup.renderLoading(false);
-        profileEditPopup.close();
-      });
+      .finally(() => profileEditPopup.renderLoading(false));
   }
 });
 profileEditPopup.setEventListeners();
@@ -134,12 +138,10 @@ const addCardPopup = new PopupWithForm(addCardPopupSelector, {
         const cardElement = card.generateCard();
         cardList.addItem(cardElement);
         addCardFormValidator.disableButton();
+        addCardPopup.close();
       })
       .catch(err => console.log(err))
-      .finally(() => {
-        addCardPopup.renderLoading(false);
-        addCardPopup.close();
-      });
+      .finally(() => addCardPopup.renderLoading(false));
   }
 });
 addCardPopup.setEventListeners();
@@ -157,12 +159,10 @@ const popupWithSubmit = new PopupWithSubmit({
         // Возвращаем объект карточки для удаления
         const cardToDelete = popupWithSubmit.getCardElement();
         cardToDelete.removeCard();
+        popupWithSubmit.close();
       })
       .catch(err => console.log(err))
-      .finally(() => {
-        popupWithSubmit.renderLoading(false);
-        popupWithSubmit.close();
-      });
+      .finally(() => popupWithSubmit.renderLoading(false));
   }
 }, popupWithSubmitSelector);
 popupWithSubmit.setEventListeners();
